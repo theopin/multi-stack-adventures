@@ -1,11 +1,13 @@
-# Pull Ubuntu image
-FROM ubuntu:18.04
+# Pull Nginx image
+FROM nginx:latest
 
-# Install Nginx
-RUN apt-get -y update && apt-get -y install nginx
+# Create app directory
+WORKDIR /app
 
 # Copy the Nginx config
 COPY default /etc/nginx/sites-available/default
+
+COPY index.html /usr/share/nginx/html/index.html
 
 # Run the Nginx server
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
