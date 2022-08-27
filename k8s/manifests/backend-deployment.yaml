@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: nginx:latest
+          image: theopin/cs3219-nginx-a1
           ports:
             - name: http
               containerPort: 80
