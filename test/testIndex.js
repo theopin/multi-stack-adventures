@@ -41,5 +41,9 @@ function runGetTests() {
 }
 
 function runPostTests() {
+
+}
+
+function runPatchTests() {
     
 }
