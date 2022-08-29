@@ -24,7 +24,7 @@ try {
 } catch (e) {
   console.error(e);
 }
-
+console.log("Mongodb URI", process.env.MONGODB_URI)
 const server = app.listen(port, () => {
   console.log("Server started on port: " + port);
 });
