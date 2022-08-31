@@ -1,0 +1,25 @@
+{
+  "name": "redis-exploration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theopin/redis-exploration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theopin/redis-exploration/issues"
+  },
+  "homepage": "https://github.com/theopin/redis-exploration#readme",
+  "dependencies": {
+    "mongoose": "^6.5.4",
+    "redis": "^4.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1"
+  }
+}
