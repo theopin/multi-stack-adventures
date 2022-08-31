@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 //import connectDatabase from './mongodb/connect.js'
+import ObjectRouter from "./objects/routes/objects.route.js";
 
 const port = 3000;
 
@@ -17,5 +18,7 @@ app.options('*', cors())
 //   } catch (e) {
 //     console.error(e);
 //   }
+
+app.use('/objects', ObjectRouter);
 
 app.listen(port, () => console.log('Service listening on Port', port));
