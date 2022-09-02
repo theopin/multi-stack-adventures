@@ -11,32 +11,35 @@ const insertData = (req, res) => {
             });
         })
         .catch((errorObject) => {
-            console.log(errorObject)
             return res.status(500).json({message: "Failed to insert data"});
         });
 };
 
 const getDataFromDatabase = (req, res) => {
+    const {id} = req.params;
     ObjectsService
-        .getDataFromDatabase()
+        .getDataSetFromDatabase(id)
         .then((response) => {
             return res.status(200).json({
                 status: true,
-                response: "Retrieved data from Mongodb",
+                message: "Retrieved data from Mongodb",
+                response
             });
         })
         .catch((errorObject) => {
+            console.log(errorObject)
             return res.status(500).json({message: "Failed to retrieve data"});
         });
 };
 
 const getDataFromRedis = (req, res) => {
     ObjectsService
-        .getDataFromRedis()
+        .getDataSetFromRedis()
         .then((response) => {
             return res.status(200).json({
                 status: true,
-                response: "Retrieved data from Redis",
+                message: "Retrieved data from Redis",
+                response: JSON.parse(response)
             });
         })
         .catch((errorObject) => {

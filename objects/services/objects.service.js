@@ -5,22 +5,28 @@ import RedisInstance from '../../redis/instance.js';
 import axios from 'axios'
 
 const objectRedis = new RedisInstance();
-const KEY_VALUE = "valid"
 
 export default class ObjectService {
 
   static async insertData() {
-    const data = await axios.get("http://jsonplaceholder.typicode.com/photos")
-    console.log(data)
+    const response = await axios.get("http://jsonplaceholder.typicode.com/photos");
+    const insertableData = response.data.map((obj => ({id: obj.id, url: obj.url})));
+    await Helper.deleteAll(ObjectModel);
+    await objectRedis.flushAll();
+
+    await Helper.save(ObjectModel, insertableData);
+
+    const redisStatus = await objectRedis.setValues(JSON.stringify(insertableData));
+    if(!redisStatus == "OK")
+      throw('InsertionError');
     // run command to insert many into db
-    // run command to insert many into redis
   };
 
-  static async getDataFromDatabase() {
-    //run get objects from database
+  static async getDataSetFromDatabase() {
+    return await Helper.list(ObjectModel, {});
   };
 
-  static async getDataFromRedis() {
-    //run get objects from redis
+  static async getDataSetFromRedis() {
+    return await objectRedis.getObject();
   }
 }

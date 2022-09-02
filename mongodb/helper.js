@@ -1,24 +1,15 @@
 
 export default class Helper {
+    static async deleteAll(Model) {
+        return Model.deleteMany ({})
+    };
+
     static async save(Model, data) {
-        const collection = new Model(data);
-        return collection.save();
+        return Model.insertMany(data);
     };
 
     static async list(Model, query) { 
         return Model.find(query).exec(); 
-    };
-
-    static async listOne(Model, query) { 
-        return Model.findOne(query).exec(); 
-    };
-
-    static async updateOne(Model, condition, set, newDoc) { 
-        return Model.findOneAndUpdate(condition, set, newDoc).exec(); 
-    };
-
-    static async deleteOne(Model, query) { 
-        return Model.deleteOne(query); 
     };
 };
 

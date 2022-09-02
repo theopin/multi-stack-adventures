@@ -8,17 +8,20 @@ export default class RedisInstance {
     async getRedisClient() {
         this.redisClient = await startRedisClient()
     }
-    async getObject(key) {
-        return await this.redisClient.GET(key);
+    async getObject() {
+        const result =  await this.redisClient.GET("stored");
+        return result
     } 
 
-    async createObject(key, value) {
-        console.log("ll", this.redisClient)
-        return await this.redisClient.SET(key, value);
+    async flushAll() {
+        const result =  await this.redisClient.FLUSHALL();
+        console.log(result)
+
+        return result
     } 
 
-    async setExpiryOfObject(key, value) {
-        return await this.redisClient.EXPIREAT(key, value);
+    async setValues(array) {
+        return await this.redisClient.SET("stored", array);
     } 
 
 }
