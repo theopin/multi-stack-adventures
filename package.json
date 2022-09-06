@@ -16,6 +16,7 @@
     "nodemon": "^2.0.19"
   },
   "dependencies": {
+    "accesscontrol": "^2.2.1",
     "bcrypt": "^5.0.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
