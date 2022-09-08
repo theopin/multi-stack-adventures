@@ -3,11 +3,11 @@ import ObjectsService from '../services/objects.service.js';
 
 const insertData = (req, res) => {
     ObjectsService
-        .insertData()
+        .clearData()
         .then((response) => {
             return res.status(200).json({
                 status: true,
-                response: "Inserted data into MongoDB and Redis",
+                response: "Cleared cache and database",
             });
         })
         .catch((errorObject) => {
@@ -18,16 +18,15 @@ const insertData = (req, res) => {
 const getDataFromDatabase = (req, res) => {
     const {id} = req.params;
     ObjectsService
-        .getDataSetFromDatabase(id)
+        .getDataSetFromDatabase()
         .then((response) => {
             return res.status(200).json({
                 status: true,
-                message: "Retrieved data from Mongodb",
-                response
+                message: response.message,
+                response: response.results
             });
         })
         .catch((errorObject) => {
-            console.log(errorObject)
             return res.status(500).json({message: "Failed to retrieve data"});
         });
 };
@@ -38,11 +37,13 @@ const getDataFromRedis = (req, res) => {
         .then((response) => {
             return res.status(200).json({
                 status: true,
-                message: "Retrieved data from Redis",
-                response: JSON.parse(response)
+                message: response.message,
+                response: response.results
             });
         })
         .catch((errorObject) => {
+            console.log(101)
+            console.log(errorObject)
             return res.status(500).json({message: "Failed to retrieve data"});
         });
 };

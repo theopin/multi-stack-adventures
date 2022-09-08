@@ -9,19 +9,16 @@ export default class RedisInstance {
         this.redisClient = await startRedisClient()
     }
     async getObject() {
-        const result =  await this.redisClient.GET("stored");
+        const result =  await this.redisClient.GET("values");
         return result
     } 
 
     async flushAll() {
-        const result =  await this.redisClient.FLUSHALL();
-        console.log(result)
-
-        return result
+        return await this.redisClient.FLUSHALL();
     } 
 
     async setValues(array) {
-        return await this.redisClient.SET("stored", array);
+        return await this.redisClient.SETEX("values", 1500, array);
     } 
 
 }

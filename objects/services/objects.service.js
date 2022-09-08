@@ -8,25 +8,46 @@ const objectRedis = new RedisInstance();
 
 export default class ObjectService {
 
-  static async insertData() {
-    const response = await axios.get("http://jsonplaceholder.typicode.com/photos");
-    const insertableData = response.data.map((obj => ({id: obj.id, url: obj.url})));
+  static async clearData() {
     await Helper.deleteAll(ObjectModel);
     await objectRedis.flushAll();
-
-    await Helper.save(ObjectModel, insertableData);
-
-    const redisStatus = await objectRedis.setValues(JSON.stringify(insertableData));
-    if(!redisStatus == "OK")
-      throw('InsertionError');
-    // run command to insert many into db
   };
 
   static async getDataSetFromDatabase() {
-    return await Helper.list(ObjectModel, {});
+    const dbResults = await Helper.list(ObjectModel, {});
+
+    if (dbResults.length > 0)
+      return {
+        results: dbResults,
+        message: "Retrieved data from MongoDB database."
+      };
+
+    const apiResponse = await axios.get("http://jsonplaceholder.typicode.com/photos");
+    await Helper.save(ObjectModel, apiResponse.data);
+    return {
+      results: apiResponse.data,
+      message: "No data in MongoDB database. Pulled data from JSON server and populated database."
+    };
   };
 
   static async getDataSetFromRedis() {
-    return await objectRedis.getObject();
-  }
+    const redisResults = await objectRedis.getObject();
+    
+    if (redisResults)
+      return {
+        results: JSON.parse(redisResults),
+        message: "Retrieved data from Redis Cache."
+      };
+
+    const apiResponse = await axios.get("http://jsonplaceholder.typicode.com/photos");
+    const redisStatus = await objectRedis.setValues(JSON.stringify(apiResponse.data));
+    if(!redisStatus == "OK")
+      throw('InsertionError');
+
+    return {
+      results: apiResponse.data,
+      message: "No data in Redis Cache. Pulled data from JSON server and populated cache."
+    };
+  };
+
 }
