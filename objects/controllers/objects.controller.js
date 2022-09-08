@@ -3,11 +3,11 @@ import ObjectsService from '../services/objects.service.js';
 
 const insertData = (req, res) => {
     ObjectsService
-        .clearData()
+        .initializeData()
         .then((response) => {
             return res.status(200).json({
                 status: true,
-                response: "Cleared cache and database",
+                response: "Cleared cache and repopulated database.",
             });
         })
         .catch((errorObject) => {

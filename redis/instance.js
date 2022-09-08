@@ -18,7 +18,7 @@ export default class RedisInstance {
     } 
 
     async setValues(array) {
-        return await this.redisClient.SETEX("values", 1500, array);
+        return await this.redisClient.SETEX("values", 30, array);
     } 
 
 }
