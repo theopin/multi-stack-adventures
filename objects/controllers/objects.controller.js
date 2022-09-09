@@ -7,16 +7,16 @@ const insertData = (req, res) => {
         .then((response) => {
             return res.status(200).json({
                 status: true,
-                response: "Cleared cache and repopulated database.",
+                message: "Cleared cache and repopulated database."
             });
         })
         .catch((errorObject) => {
+            console.log(errorObject)
             return res.status(500).json({message: "Failed to insert data"});
         });
 };
 
 const getDataFromDatabase = (req, res) => {
-    const {id} = req.params;
     ObjectsService
         .getDataSetFromDatabase()
         .then((response) => {
@@ -27,6 +27,7 @@ const getDataFromDatabase = (req, res) => {
             });
         })
         .catch((errorObject) => {
+            console.log(errorObject)
             return res.status(500).json({message: "Failed to retrieve data"});
         });
 };
