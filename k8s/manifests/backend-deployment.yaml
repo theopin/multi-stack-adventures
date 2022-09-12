@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
         - name: backend
-          image: theopin/cs3219-nginx-a1
+          image: theopin/cs3219-a1
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
           resources:
             limits:
               cpu: 40m
