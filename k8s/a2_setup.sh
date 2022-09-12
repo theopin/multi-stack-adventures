@@ -1,6 +1,6 @@
 
 printf "\n1a - Creating Kind cluster...\n"
-kind create cluster --name kind-1 --config kind/cluster-config.yaml --image kindest/node:v1.23.0
+kind create cluster --name kind-1 --config kind/cluster-config.yaml --image kindest/node:v1.24.0
 
 printf "\n1b - Verifying cluster...\n"
 kubectl cluster-info
@@ -25,7 +25,6 @@ kubectl get nodes -L ingress-ready
 
 printf "\n4a - Setting Ingress controller...\n"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-kubectl delete ValidatingWebhookConfiguration ingress-nginx-admission
 sleep 10
 
 printf "\n4b - Verifying Ingress controller...\n"
