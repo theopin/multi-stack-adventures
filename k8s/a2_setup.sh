@@ -14,15 +14,6 @@ printf "\n2b - Verifying deployment...\n"
 kubectl rollout status deployment/backend
 
 
-printf "\n3a - Setting ingress-ready attribute...\n"
-kubectl label node kind-1-control-plane ingress-ready=true
-kubectl label node kind-1-worker2 ingress-ready=true
-kubectl label node kind-1-worker3 ingress-ready=true
-
-printf "\n3b - Verifying ingress-ready...\n"
-kubectl get nodes -L ingress-ready
-
-
 printf "\n4a - Setting Ingress controller...\n"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 sleep 10

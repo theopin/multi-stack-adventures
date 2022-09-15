@@ -14,11 +14,9 @@ kubectl apply -f manifests/backend-hpa.yaml
 printf "\n4b - Verify autoscaling...\n"
 kubectl describe hpa
 
-printf "\n5 - Verify zone allocation...\n"
-kubectl get po -lapp=backend-zone-aware -owide --sort-by='.spec.nodeName'
 
-printf "\n6a - Apply zone-aware scheduling...\n"
+printf "\n5a - Apply zone-aware scheduling...\n"
 kubectl apply -f manifests/backend-zone-aware.yaml
 
-printf "\n6b - Verify zone-aware scheduling...\n"
+printf "\n5b - Verify zone-aware scheduling...\n"
 kubectl get po -lapp=backend-zone-aware -owide --sort-by='.spec.nodeName'
