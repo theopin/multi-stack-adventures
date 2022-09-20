@@ -1,17 +1,18 @@
 const newUsers = [
     {
-        accountId: '3f66e61b-cf53-4cf9-944b-591f781f2201',
-        name: 'Shawn Lim',
+        username: 'shawn',
+        password: '123456',
         balance: 0,
     },
     {
         id: 'c9e919ed-6813-410d-88a4-120b8f499ffb',
-        name: 'John Doe',
+        username: 'john123',
+        password: '211322',
         balance: 100,
     },
     {
-        id: 'b0775115-3aa0-4f48-9a52-a2df795c0b49',
-        name: 'Janet Dane',
+        username: 'janet',
+        password: '454212',
         balance: 500,
     },
 ];
