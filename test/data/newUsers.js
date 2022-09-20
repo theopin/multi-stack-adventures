@@ -5,15 +5,25 @@ const newUsers = [
         balance: 0,
     },
     {
-        id: 'c9e919ed-6813-410d-88a4-120b8f499ffb',
         username: 'john123',
         password: '211322',
         balance: 100,
-    },
+    },    
     {
-        username: 'janet',
         password: '454212',
         balance: 500,
+    },
+
+    {
+        username: 'janet2',
+        password: '4542',
+        balance: 500,
+    },
+
+    {
+        username: 'janet2',
+        password: '454212',
+        balance: -500,
     },
 ];
 export default newUsers;
