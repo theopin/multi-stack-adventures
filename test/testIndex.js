@@ -130,7 +130,6 @@ function runPostTests() {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    console.log(res.body)
                     users[1].token = res.body.response.token
                     done();
                 });
