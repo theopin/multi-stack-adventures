@@ -116,6 +116,7 @@ function runPostTests() {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
+                    console.log(res.body)
                     users[0].token = res.body.response.token
                     done();
                 });
@@ -258,7 +259,7 @@ function runPatchTests() {
                 .type('form')
                 .send({change: -5000})
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    res.should.have.status(00);
                     res.body.should.be.a('object');
                     done();
                 });
