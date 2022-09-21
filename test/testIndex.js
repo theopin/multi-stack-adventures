@@ -195,7 +195,6 @@ function runGetTests() {
                 });
         });
 
-        // invalid id req
 
         it("should not get a account of a user with an invalid id", (done) => {
             chai.request(app)
@@ -250,8 +249,6 @@ function runPatchTests() {
                     done();
                 });
         });
-
-        // invalid id req
 
         // test for excessive withdrawals
 
