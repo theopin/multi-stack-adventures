@@ -251,6 +251,18 @@ function runPatchTests() {
         });
 
         // test for excessive withdrawals
+        it("should not decrease a single bank account user record beyond current balance", (done) => {
+            chai.request(app)
+                .patch(`/accounts/${users[1]._id}`)
+                .set({ "Authorization": `Bearer ${users[1].token}` })
+                .type('form')
+                .send({change: -5000})
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
 
         it("should decrease a single bank account user record", (done) => {
             chai.request(app)
