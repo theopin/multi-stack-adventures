@@ -32,7 +32,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: task-b-env
-          environment_name: Taskbenv-node
-          version_label: ${{github.sha}}
+          environment_name: Taskbenv-env
+          version_label: ${{github.sha::8}}
           region: ap-southeast-1
           deployment_package: deploy.zip
