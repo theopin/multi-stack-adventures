@@ -26,6 +26,11 @@ jobs:
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
 
+        
+      - name: Set outputs
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -33,6 +38,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: task-b-env
           environment_name: Taskbenv-env
-          version_label: ${{github.sha::8}}
+          version_label: ${{ steps.vars.outputs.sha_short }}
           region: ap-southeast-1
           deployment_package: deploy.zip
