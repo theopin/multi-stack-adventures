@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios')
 
 const requestURL = 'https://api.exchangerate.host/latest';
 
@@ -7,6 +7,7 @@ const asianCurrencies = [ 'RUB', 'AFN', 'EUR', 'AMD', 'AZN', 'BHD', 'BDT', 'BTN'
     'LAK', 'LBP', 'MOP','MYR', 'MVR', 'MNT', 'MMK', 'AMD', 'NPR', 'TRY', 'KPW', 'OMR', 'PKR','ILS', 'PHP', 'QAR',
     'RUB', 'SAR', 'SGD', 'KRW', 'RUB', 'LKR', 'SYP', 'TWD', 'TJS', 'THB', 'TRY', 'TMT', 'AED', 'UZS', 'VND', 'YER'
 ]
+
 
 async function getAsianForexData(base) {
     const rates =  await axios.get(requestURL, { params: { base } })
@@ -19,4 +20,13 @@ async function getAsianForexData(base) {
 
 }
 
-const x = await getAsianForexData('SGD')
+exports.handler = async (event) => {
+    const response = {
+      statusCode: 200,
+      body: getAsianForexData('SGD'),
+    }
+    return response
+  }
+
+
+
