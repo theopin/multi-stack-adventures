@@ -26,12 +26,25 @@ jobs:
             file_name: .env
             fail_on_empty: true
 
-      - name: Generate deployment package for AWS EB
-        run: zip -r deploy.zip . -x '*.git*'
-
       - name: Set outputs
         id: vars
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Generate deployment package for AWS Lambda
+        run: zip -r deployLambda.zip ./forex_serverless -x '*.git*'
+
+      - name: Deploy to Lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ap-southeast-1
+          function_name: getAsianForexData
+          zip_file: deployLambda.zip
+
+      - name: Generate deployment package for AWS EB
+        run: zip -r deploy.zip . -x '*.git*'
+
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
@@ -44,14 +57,3 @@ jobs:
           region: ap-southeast-1
           deployment_package: deploy.zip
 
-      - name: Generate deployment package for AWS Lambda
-        run: zip -r deployLambda.zip ..forex_serverless -x '*.git*'
-
-      - name: Deploy to Lambda
-        uses: appleboy/lambda-action@master
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ap-southeast-1
-          function_name: getAsianForexData
-          zip_file: deployLambda.zip
