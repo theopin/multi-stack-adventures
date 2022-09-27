@@ -23,7 +23,7 @@ async function getAsianForexData(base) {
 exports.handler = async (event) => {
     const response = {
       statusCode: 200,
-      body: {rates: getAsianForexData('SGD')},
+      body: {rates: await getAsianForexData('SGD')},
     }
     return response
   }
