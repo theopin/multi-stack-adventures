@@ -47,7 +47,7 @@ jobs:
           zip_file: deployLambda.zip
 
       - name: Generate deployment package for AWS EB
-        run: zip -r deploy.zip . -x '*.git*'
+        run: zip -r9 deploy.zip . -x '*.git*'
 
 
       - name: Deploy to EB
