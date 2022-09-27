@@ -30,6 +30,10 @@ jobs:
         id: vars
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
+      - name: Install packages
+        working-directory: ./forex_serverless
+        run: npm ci
+      
       - name: Generate deployment package for AWS Lambda
         run: zip -r deployLambda.zip ./forex_serverless -x '*.git*'
 
