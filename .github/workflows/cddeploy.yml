@@ -35,7 +35,7 @@ jobs:
         run: npm ci
       
       - name: Generate deployment package for AWS Lambda
-        run: zip -r9 deployLambda.zip ./forex_serverless -x '*.git*'
+        run: zip -r9 deployLambda.zip ./forex_serverless/. -x '*.git*'
 
       - name: Deploy to Lambda
         uses: appleboy/lambda-action@master
