@@ -44,7 +44,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ap-southeast-1
           function_name: getAsianForexData
-          zip_file: deployLambda.zip
+          zip_file: forex_serverless.zip
 
       - name: Generate deployment package for AWS EB
         run: zip -r9 deploy.zip . -x '*.git*'
