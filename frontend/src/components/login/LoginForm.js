@@ -1,8 +1,7 @@
-const SignupForm = () => {
+const LoginForm = () => {
   return (
     <div class="w-50">
-      <h3>Sign Up</h3>
-      <div>Please enter the following details.</div>
+      <h3>Welcome to Delta Bank!</h3>
       <form>
         <div class="form-group">
           <label for="username">Username</label>
@@ -24,16 +23,6 @@ const SignupForm = () => {
           />
           <small>Please enter a 6 digit numeric passcode.</small>
         </div>
-        <div class="form-group">
-          <label for="balance">Depositing Amount</label>
-          <input
-            type="number"
-            class="form-control"
-            id="balance"
-            placeholder="Password"
-          />
-        </div>
-
         <button type="submit" class="btn btn-primary">
           Submit
         </button>
@@ -42,4 +31,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default LoginForm;
