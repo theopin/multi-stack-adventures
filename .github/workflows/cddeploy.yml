@@ -1,11 +1,10 @@
 name: Build and Deploy to AWS EB and Lambda
 
 on:
- pull_request:
+ push:
    branches: 
      - master
-   types: 
-     - closed
+
 
 jobs:
   build:
