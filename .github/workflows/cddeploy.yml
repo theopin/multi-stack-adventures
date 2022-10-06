@@ -15,6 +15,7 @@ jobs:
 
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1.3
+        working-directory: ./backend
         with:
             envkey_MONGODB_URI: ${{ secrets.MONGODB_PROD_URI }}
             envkey_USER_REDIS_PORT: ${{ secrets.USER_REDIS_PORT }}
@@ -48,7 +49,8 @@ jobs:
 
 
       - name: Generate deployment package for AWS EB
-        run: zip -r9 deploy.zip . -x'*.git*'
+        working-directory: ./backend
+        run: zip -r9 ../deploy.zip . -x'*.git*'
 
 
       - name: Deploy to EB
