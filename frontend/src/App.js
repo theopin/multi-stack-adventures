@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ForexTable from "./components/home/ForexDisplay";
+import HomePage from "./components/home/HomePage";
 import SignupPage from "./components/signup/SignupPage";
 import LoginPage from "./components/login/LoginPage";
 import TransferPage from "./components/transfer/TransferPage";
@@ -20,7 +20,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />}></Route>
           </Route>
           <Route element={<AuthLayout />}>
-            <Route path="/home" element={<ForexTable />}></Route>
+            <Route path="/home" element={<HomePage />}></Route>
             <Route path="/transfer" element={<TransferPage />}></Route>
           </Route>
         </Routes>

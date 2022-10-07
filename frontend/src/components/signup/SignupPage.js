@@ -7,7 +7,6 @@ function SignupPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [balance, setBalance] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = () => {
@@ -17,7 +16,7 @@ function SignupPage() {
         navigate("/login");      
     })
     .catch((err) => {
-      setError(err);
+      console.log(err);
     });
   };
   return (

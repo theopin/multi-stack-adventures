@@ -7,21 +7,19 @@ import { HttpResponse } from "../../utils/httpResponse";
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
 
   const handleLogin = (e) => {
     postRequest('/accounts/auth', {username, password})
     .then((res) => {
-      if (res.data.status === HttpResponse.OK && res.data.response) {
-        console.log(101)
+      if (res.status === HttpResponse.OK && res.data.response) {
         document.cookie = `AccessToken=${res.data.response.token}`;
         navigate("/home");
       }
     })
     .catch((err) => {
-      setError(err);
+      console.log(err);
     });
   }
 

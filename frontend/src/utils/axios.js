@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "./cookies";
 
 const API_SVC = process.env.REACT_APP_API_SVC || "http:/localhost:3000";
 const TIMEOUT_WINDOW = 4000;
@@ -8,9 +9,11 @@ const axiosInstance = axios.create({
   timeout: TIMEOUT_WINDOW,
 });
 
+
+
 const setAuthToken = (req) => {
   try {
-    let accessToken = "AccessToken";
+    let accessToken = getToken();
     req.headers.Authorization = `Bearer ${accessToken}`;
     return req;
   } catch (err) {
