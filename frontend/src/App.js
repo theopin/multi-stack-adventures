@@ -1,13 +1,13 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ForexTable from "./components/forex/ForexDisplay";
+import ForexTable from "./components/home/ForexDisplay";
 import SignupPage from "./components/signup/SignupPage";
 import LoginPage from "./components/login/LoginPage";
 import TransferPage from "./components/transfer/TransferPage";
 
 import AuthLayout from "./layouts/AuthLayout";
 import DefaultLayout from "./layouts/DefaultLayout";
-import {postRequest} from "./utils/axios.js";
+
 function App() {
   
   return (

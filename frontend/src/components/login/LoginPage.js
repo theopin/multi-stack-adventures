@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postRequest } from "../../utils/axios";
+import { HttpResponse } from "../../utils/httpResponse";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -9,19 +10,30 @@ function LoginPage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+
   const handleLogin = (e) => {
-    postRequest('acccounts/auth', {username, password})
+    postRequest('/accounts/auth', {username, password})
     .then((res) => {
-      console.log(res)
+      if (res.data.status === HttpResponse.OK && res.data.response) {
+        console.log(101)
+        document.cookie = `AccessToken=${res.data.response.token}`;
+        navigate("/home");
+      }
     })
+    .catch((err) => {
+      setError(err);
+    });
   }
 
+  const redirectSignup = () => {
+    navigate("/signup");
+  }
 
   
     return (
       <div>
         <h3>Welcome to Delta Bank!</h3>
-        <form>
+        <div>
           <div class="form-group">
             <label for="username">Username</label>
             <input
@@ -43,10 +55,16 @@ function LoginPage() {
             />
             <small>Please enter a 6 digit numeric passcode.</small>
           </div>
-          <button type="submit" class="btn btn-primary" disabled={!username || !password} onClick={handleLogin}>
-            Submit
+          <div class="d-flex justify-content-center">
+          <button  class="col btn btn-primary" disabled={!username || !password} onClick={handleLogin}>
+            Login
           </button>
-        </form>
+          <button  class="col btn btn-primary" onClick={redirectSignup}>
+            Sign Up
+          </button>
+          </div>
+
+        </div>
       </div>
     );
 }

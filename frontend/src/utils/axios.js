@@ -40,7 +40,3 @@ export function patchRequest(url, data = {}) {
 export function deleteRequest(url, params = {}) {
   return axiosInstance.delete(url, params);
 }
-
-
-postRequest('/accounts')
-postRequest('/accounts/auth')
