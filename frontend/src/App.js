@@ -7,10 +7,11 @@ import TransferPage from "./components/transfer/TransferPage";
 
 import AuthLayout from "./layouts/AuthLayout";
 import DefaultLayout from "./layouts/DefaultLayout";
-
+import {postRequest} from "./utils/axios.js";
 function App() {
+  
   return (
-    <div class="d-flex justify-content-center">
+    <div class="mt-5 d-flex justify-content-center">
       <Router>
         <Routes>
           <Route element={<DefaultLayout />}>
