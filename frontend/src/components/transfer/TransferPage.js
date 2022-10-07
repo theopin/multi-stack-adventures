@@ -1,10 +1,9 @@
-const LoginForm = () => {
+const TransferPage = () => {
   return (
-    <div class="w-50">
-      <h3>Welcome to Delta Bank!</h3>
+    <div>
       <form>
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">User Account</label>
           <input
             type="text"
             class="form-control"
@@ -14,14 +13,13 @@ const LoginForm = () => {
           />
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="balance">Transfer Amount</label>
           <input
-            type="password"
+            type="number"
             class="form-control"
-            id="password"
-            placeholder="Password"
+            id="balance"
+            placeholder="Value"
           />
-          <small>Please enter a 6 digit numeric passcode.</small>
         </div>
         <button type="submit" class="btn btn-primary">
           Submit
@@ -31,4 +29,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default TransferPage;

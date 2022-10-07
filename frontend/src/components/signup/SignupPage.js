@@ -1,4 +1,4 @@
-const SignupForm = () => {
+const SignupPage = () => {
   return (
     <div class="w-50">
       <h3>Sign Up</h3>
@@ -42,4 +42,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignupPage;

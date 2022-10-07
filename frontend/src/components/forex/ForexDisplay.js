@@ -1,6 +1,6 @@
 const ForexTable = () => {
   return (
-    <div class="w-50">
+    <div>
       <h3>Forex Converter</h3> 
        {/*TODO: Fetch and run data  */}
        <div>Currency Selected: SGD</div>
