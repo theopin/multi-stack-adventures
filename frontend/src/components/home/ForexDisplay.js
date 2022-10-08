@@ -1,25 +1,38 @@
-import  { useState, useEffect } from "react";
-import { patchRequest } from "../../utils/axios";
-import { getStorage } from "../../utils/storage";
+import { useState, useEffect } from "react";
 import { HttpResponse } from "../../utils/httpResponse";
+import { getLambdaRequest } from "../../utils/axiosLambda";
 
 function ForexTable() {
-  const [account, setAccount] = useState();
+  const [ratesData, setRates] = useState();
 
   useEffect(() => {
-    patchRequest('/accounts/' + getStorage("id")).then((res) => {
+    getLambdaRequest("/").then((res) => {
       if (res.status === HttpResponse.OK) {
-        setAccount(res.data.response[0]);
+        setRates(res.data);
       }
     });
   }, []);
 
+  if (!ratesData) return <div></div>;
+
+  const DisplayData = () => {
+    return Object.keys(ratesData.rates).map((key) => {
+      console.log(key, ratesData.rates[key])
+      return (
+        <tr>
+          <td>{key}</td>
+          <td>{ratesData.rates[key]}</td>
+        </tr>
+      );
+    });
+  };
+
+  
   return (
     <div>
-      <h3>Forex Converter</h3> 
-       {/*TODO: Fetch and run data  */}
-       <div>Currency Selected: SGD</div>
-      <table class="table">
+      <h3>Forex Converter</h3>
+      <div>Currency Selected: SGD</div>
+      <table class="table overflow-hidden" >
         <thead>
           <tr>
             <th scope="col">Currency</th>
@@ -27,20 +40,17 @@ function ForexTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>INR</td>
-            <td>56.1</td>
-          </tr>
+          <DisplayData />
         </tbody>
       </table>
       <div class="row">
-          {/* TODO: Fetch data  */}
-          <p>Last Updated at: 6 October 2022 11:59pm</p>
-          {/* TODO: Fetch data  */}
-          <button class="btn btn-primary">Refresh Data</button>
+        {/* TODO: Fetch data  */}
+        <p>Last Updated at: 6 October 2022 11:59pm</p>
+        {/* TODO: Fetch data  */}
+        <button class="btn btn-primary">Refresh Data</button>
       </div>
     </div>
   );
-};
+}
 
 export default ForexTable;

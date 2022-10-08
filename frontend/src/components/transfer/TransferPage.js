@@ -8,18 +8,17 @@ import { HttpResponse } from "../../utils/httpResponse";
 function TransferPage() {
 
   const [id, setId] = useState("");
-  const [balance, setBalance] = useState("");
+  const [change, setChange] = useState("");
   const navigate = useNavigate();
 
   const handleTransfer = (e) => {
-    patchRequest('/accounts/' + id, {balance})
+    patchRequest('/accounts/' + id, {change})
     .then((res) => {
       if (res.status === HttpResponse.OK && res.data.response) {
-        patchRequest('/accounts/' + getStorage("id"), {balance: parseInt(balance) * -1 })
+        patchRequest('/accounts/' + getStorage("id"), {change: parseInt(change) * -1 })
         .then((res) => {
-          if (res.status === HttpResponse.OK && res.data.response) {
+          if (res.status === HttpResponse.OK && res.data.response) 
             navigate("/home");
-          }
         })
         .catch((err) => {
           console.log(err);
@@ -35,7 +34,7 @@ function TransferPage() {
   return (
     <div>
       <h3>Transfer Money</h3>
-      <form>
+      <div>
         <div class="form-group">
           <label for="username">User Account</label>
           <input
@@ -49,14 +48,15 @@ function TransferPage() {
           <label for="balance">Transfer Amount</label>
           <input
             type="number"
-            onChange={(e) => setBalance(e.target.value)}
+            class="form-control"
+            onChange={(e) => setChange(e.target.value)}
             placeholder="Value"
           />
         </div>
         <button class="btn btn-primary" onClick={handleTransfer}>
           Transfer Money
         </button>
-      </form>
+      </div>
     </div>
   );
 };
