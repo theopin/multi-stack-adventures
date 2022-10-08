@@ -12,7 +12,7 @@ function SignupPage() {
   const handleSignup = () => {
     postRequest('/accounts', {username, password, balance})
     .then((res) => {
-      if (res.data.status === HttpResponse.CREATED && res.data.response) 
+      if (res.status === HttpResponse.CREATED && res.data.response) 
         navigate("/login");      
     })
     .catch((err) => {

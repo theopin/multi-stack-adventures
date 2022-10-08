@@ -1,4 +1,19 @@
-const ForexTable = () => {
+import  { useState, useEffect } from "react";
+import { patchRequest } from "../../utils/axios";
+import { getStorage } from "../../utils/storage";
+import { HttpResponse } from "../../utils/httpResponse";
+
+function ForexTable() {
+  const [account, setAccount] = useState();
+
+  useEffect(() => {
+    patchRequest('/accounts/' + getStorage("id")).then((res) => {
+      if (res.status === HttpResponse.OK) {
+        setAccount(res.data.response[0]);
+      }
+    });
+  }, []);
+
   return (
     <div>
       <h3>Forex Converter</h3> 
@@ -19,14 +34,10 @@ const ForexTable = () => {
         </tbody>
       </table>
       <div class="row">
-        <div class="col">
           {/* TODO: Fetch data  */}
           <p>Last Updated at: 6 October 2022 11:59pm</p>
-        </div>
-        <div class="col">
           {/* TODO: Fetch data  */}
           <button class="btn btn-primary">Refresh Data</button>
-        </div>
       </div>
     </div>
   );
