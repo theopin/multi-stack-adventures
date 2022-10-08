@@ -1,15 +1,18 @@
 import { clearCookies } from "../../utils/cookies";
+import { clearStorage } from "../../utils/storage";
 
 function Navbar() {
 
   const handleDelete = () => {
     console.log("Deleted");
     clearCookies()
+    clearStorage("id")
     window.location.reload(false);
   };
   const handleLogout = () => {
     document.cookie = "";
     clearCookies()
+    clearStorage("id")
     window.location.reload(false);
   };
 

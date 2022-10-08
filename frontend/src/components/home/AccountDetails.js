@@ -1,19 +1,19 @@
 import { getRequest } from "../../utils/axios";
+import { getStorage } from "../../utils/storage";
 
-function retrieveBalance() {
-  console.log(111)
-    getRequest('/accounts/111')
-    .then((res) => {
-      console.log(res)
-    })
 
-}
 function HomePage() {
 
+  const retrieveBalance = () => {
+    const result = getRequest('/accounts/' + getStorage("id"))
+    return result.data.response[0].balance
+}
     return (
       <div>
         <h4>Account Balance</h4>
-        <h1>S${retrieveBalance}</h1>
+        <h1>
+          {retrieveBalance}
+        </h1>
         
       </div>
     );

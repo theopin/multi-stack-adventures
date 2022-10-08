@@ -1,8 +1,14 @@
+import jwt_decode from "jwt-decode";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postRequest } from "../../utils/axios";
 import { HttpResponse } from "../../utils/httpResponse";
+import { saveStorage } from "../../utils/storage";
+
+function extractTokenData(token) {
+  return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -15,6 +21,10 @@ function LoginPage() {
     .then((res) => {
       if (res.status === HttpResponse.OK && res.data.response) {
         document.cookie = `AccessToken=${res.data.response.token}`;
+        const identity = jwt_decode(res.data.response.token)
+        
+        console.log(identity)
+        saveStorage("id", identity.id)
         navigate("/home");
       }
     })
