@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { HttpResponse } from "../../utils/httpResponse";
 import { getLambdaRequest } from "../../utils/axiosLambda";
+import { ToastContainer, toast} from "react-toastify";
 
 function ForexTable() {
   const [ratesData, setRates] = useState();
@@ -10,6 +11,11 @@ function ForexTable() {
       if (res.status === HttpResponse.OK) {
         setRates(res.data);
       }
+    })
+    .catch((err) => {
+      toast.error(err.response.data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
     });
   }, []);
 
@@ -30,6 +36,7 @@ function ForexTable() {
   return (
     <div>
       <h3>Forex Converter</h3>
+      <ToastContainer/>
       <div>Currency Selected: SGD</div>
       <table class="table overflow-hidden" >
         <thead>

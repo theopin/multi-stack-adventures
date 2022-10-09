@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getRequest, patchRequest } from "../../utils/axios";
 import { getStorage } from "../../utils/storage";
 import { HttpResponse } from "../../utils/httpResponse";
+import { ToastContainer, toast } from "react-toastify";
 
 function TransferPage() {
   const [account, setAccount] = useState();
@@ -12,11 +13,17 @@ function TransferPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getRequest("/accounts/" + getStorage("id")).then((res) => {
+    getRequest("/accounts/" + getStorage("id"))
+    .then((res) => {
       if (res.status === HttpResponse.OK) {
         setAccount(res.data.response[0]);
       }
-    });
+    })
+    .catch((err) => {
+      toast.error(err.response.data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    })
   });
 
   const handleTransfer = (e) => {
@@ -31,17 +38,22 @@ function TransferPage() {
                 navigate("/home");
             })
             .catch((err) => {
-              console.log(err);
-            });
+              toast.error(err.response.data.message, {
+                position: toast.POSITION.TOP_RIGHT
+              })
+            })
         }
       })
       .catch((err) => {
-        console.log(err);
-      });
+        toast.error(err.response.data.message, {
+          position: toast.POSITION.TOP_RIGHT
+        })
+      })
   };
   if (!account) return <div></div>;
   return (
     <div>
+      <ToastContainer/>
       <h3>Transfer Money</h3>
       <div class="row">
         <div class="col">

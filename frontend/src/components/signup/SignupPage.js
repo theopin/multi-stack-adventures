@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { postRequest } from "../../utils/axios";
 import { HttpResponse } from "../../utils/httpResponse";
 
+import { ToastContainer, toast } from 'react-toastify';
+
 function SignupPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,11 +18,14 @@ function SignupPage() {
         navigate("/login");      
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(err.response.data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
     });
   };
   return (
     <div>
+      <ToastContainer/>
       <h3>Sign Up</h3>
       <div>Please enter the following details.</div>
       <div>

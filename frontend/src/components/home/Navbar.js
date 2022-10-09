@@ -4,6 +4,7 @@ import { deleteRequest } from "../../utils/axios";
 import { getStorage } from "../../utils/storage";
 import { HttpResponse } from "../../utils/httpResponse";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast  } from "react-toastify";
 
 
 function Navbar() {
@@ -14,13 +15,19 @@ function Navbar() {
   }
 
   const handleDelete = () => {
-    deleteRequest('/accounts/' + getStorage("id")).then((res) => {
+    deleteRequest('/accounts/' + getStorage("id"))
+    .then((res) => {
       if (res.status === HttpResponse.OK) {
         clearCookies()
         clearStorage("id")
         window.location.reload(false);
       }
-    });
+    })
+    .catch((err) => {
+      toast.error(err.response.data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    })
 
   };
   const handleLogout = () => {
@@ -32,6 +39,7 @@ function Navbar() {
 
   return (
     <div>
+      <ToastContainer/>
       <button class="col btn btn-primary" onClick={handleLogout}>
         Logout
       </button>

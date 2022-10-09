@@ -5,13 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { postRequest } from "../../utils/axios";
 import { HttpResponse } from "../../utils/httpResponse";
 import { saveStorage } from "../../utils/storage";
-import { ErrorToast } from "../toasts/errorToast";
 
+import { ToastContainer, toast } from 'react-toastify';
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
 
@@ -27,8 +26,9 @@ function LoginPage() {
       }
     })
     .catch((err) => {
-      console.log(err.response.data.message)
-      setError(err.response.data.message)
+      toast.error(err.response.data.message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
     });
   }
 
@@ -39,10 +39,9 @@ function LoginPage() {
   
     return (
       <div>
-        <ErrorToast message={error}/>
         <h3>Welcome to Delta Bank!</h3>
         <div>
-          
+        <ToastContainer />
           <div class="form-group">
             <label for="username">Username</label>
             <input
