@@ -17,10 +17,9 @@ function ForexTable() {
 
   const DisplayData = () => {
     return Object.keys(ratesData.rates).map((key) => {
-      console.log(key, ratesData.rates[key])
       return (
-        <tr>
-          <td>{key}</td>
+        <tr key={key}>
+          <td >{key}</td>
           <td>{ratesData.rates[key]}</td>
         </tr>
       );
