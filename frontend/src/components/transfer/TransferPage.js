@@ -7,26 +7,47 @@ import { HttpResponse } from "../../utils/httpResponse";
 import { ToastContainer, toast } from "react-toastify";
 
 function TransferPage() {
-  const [account, setAccount] = useState();
-  const [id, setId] = useState("");
+  const [account, setAccount] = useState({ data: [] });
+  const [accounts, setAccounts] = useState([]);
   const [change, setChange] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    getRequest("/accounts/" + getStorage("id"))
-    .then((res) => {
+    async function getUsers() {
+      getRequest("/accounts/" + getStorage("id"))
+        .then((res) => {
+          if (res.status === HttpResponse.OK) {
+            setAccount(res.data.response[0]);
+          }
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        });
+    }
+
+    async function obtainUsers() {
+      const res = await getRequest("/accounts/");
+  
       if (res.status === HttpResponse.OK) {
-        setAccount(res.data.response[0]);
+        setAccounts(res.data.response.map((element) => {
+          return <option value={element._id}>{element.username}</option>;
+        })
+        )
       }
-    })
-    .catch((err) => {
-      toast.error(err.response.data.message, {
-        position: toast.POSITION.TOP_RIGHT
-      })
-    })
-  });
+  
+      return [];
+    }
+
+    getUsers();
+    obtainUsers()
+  }, []);
+
+
 
   const handleTransfer = (e) => {
+    const id = document.getElementById("accounts").value
     patchRequest("/accounts/" + id, { change })
       .then((res) => {
         if (res.status === HttpResponse.OK && res.data.response) {
@@ -39,21 +60,21 @@ function TransferPage() {
             })
             .catch((err) => {
               toast.error(err.response.data.message, {
-                position: toast.POSITION.TOP_RIGHT
-              })
-            })
+                position: toast.POSITION.TOP_RIGHT,
+              });
+            });
         }
       })
       .catch((err) => {
         toast.error(err.response.data.message, {
-          position: toast.POSITION.TOP_RIGHT
-        })
-      })
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
   };
   if (!account) return <div></div>;
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       <h3>Transfer Money</h3>
       <div class="row">
         <div class="col">
@@ -62,13 +83,11 @@ function TransferPage() {
         </div>
         <div class="col">
           <div class="form-group ">
+
             <label for="username">User Account</label>
-            <input
-              type="text"
-              class="form-control"
-              onChange={(e) => setId(e.target.value)}
-              placeholder="Enter username"
-            />
+            <select name="accounts" id="accounts">
+            {accounts}
+            </select>
           </div>
           <div class="form-group">
             <label for="balance">Transfer Amount</label>
