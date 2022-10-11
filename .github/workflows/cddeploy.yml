@@ -36,7 +36,6 @@ jobs:
 
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1.3
-        working-directory: 
         with:
             envkey_MONGODB_URI: ${{ secrets.MONGODB_PROD_URI }}
             envkey_USER_REDIS_PORT: ${{ secrets.USER_REDIS_PORT }}
