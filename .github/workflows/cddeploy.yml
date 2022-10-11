@@ -1,11 +1,10 @@
 name: Build and Deploy to AWS EB and Lambda
 
 on:
- pull_request:
+ push:
    branches: 
      - master
-   types: 
-     - closed
+
 
 jobs:
   build:
@@ -13,18 +12,6 @@ jobs:
     steps:      
       - name: Checkout source code
         uses: actions/checkout@v2
-
-      - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-            envkey_MONGODB_URI: ${{ secrets.MONGODB_PROD_URI }}
-            envkey_USER_REDIS_PORT: ${{ secrets.USER_REDIS_PORT }}
-            envkey_JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
-            envkey_JWT_TOKEN_EXPIRY: ${{ secrets.JWT_TOKEN_EXPIRY }}
-            envkey_HASH_SALT_ROUNDS: ${{ secrets.HASH_SALT_ROUNDS }}
-            directory: .
-            file_name: .env
-            fail_on_empty: true
 
       - name: Set outputs
         id: vars
@@ -47,9 +34,22 @@ jobs:
           function_name: getAsianForexData
           zip_file: forex_serverless.zip
 
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3
+        working-directory: ./backend
+        with:
+            envkey_MONGODB_URI: ${{ secrets.MONGODB_PROD_URI }}
+            envkey_USER_REDIS_PORT: ${{ secrets.USER_REDIS_PORT }}
+            envkey_JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
+            envkey_JWT_TOKEN_EXPIRY: ${{ secrets.JWT_TOKEN_EXPIRY }}
+            envkey_HASH_SALT_ROUNDS: ${{ secrets.HASH_SALT_ROUNDS }}
+            directory: .
+            file_name: .env
+            fail_on_empty: true
 
       - name: Generate deployment package for AWS EB
-        run: zip -r9 deploy.zip . -x'*.git*'
+        working-directory: ./backend
+        run: zip -r9 ../deploy.zip . -x'*.git*'
 
 
       - name: Deploy to EB
