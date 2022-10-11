@@ -67,7 +67,7 @@ function LoginPage() {
           <button  class="col btn btn-primary" disabled={!username || !password} onClick={handleLogin}>
             Login
           </button>
-          <button  class="col btn btn-primary" onClick={redirectSignup}>
+          <button  class="col btn btn-success" onClick={redirectSignup}>
             Sign Up
           </button>
           </div>

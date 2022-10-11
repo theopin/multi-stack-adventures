@@ -9,14 +9,18 @@ function HomePage() {
   
         return (
           <div>
-            <Navbar />
+            
             <div class="row">
                 <div class="col">
                   <AccountDetails/>
                 </div>
-                <div class="col">
+                <div class="col ">
                     <ForexTable  />
                 </div>
+                <div class="col">
+                  <Navbar />                
+                </div>                
+
             </div>
           </div>
         );

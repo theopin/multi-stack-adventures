@@ -45,6 +45,10 @@ function TransferPage() {
   }, []);
 
 
+  const handleBack = () => {
+    navigate("/home");
+  };
+
 
   const handleTransfer = (e) => {
     const id = document.getElementById("accounts").value
@@ -84,8 +88,8 @@ function TransferPage() {
         <div class="col">
           <div class="form-group ">
 
-            <label for="username">User Account</label>
-            <select name="accounts" id="accounts">
+            <label  for="username">User Account</label>
+            <select class="row pl-3" name="accounts" id="accounts">
             {accounts}
             </select>
           </div>
@@ -98,9 +102,12 @@ function TransferPage() {
               placeholder="Value"
             />
           </div>
-          <button class="btn btn-primary" onClick={handleTransfer}>
+          <button class="btn btn-primary mt-2" onClick={handleTransfer}>
             Transfer Money
           </button>
+          <button class="btn btn-light mt-2" onClick={handleBack}>
+          Back to Main Menu
+        </button>
         </div>
       </div>
     </div>

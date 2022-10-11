@@ -11,6 +11,11 @@ function SignupPage() {
   const [balance, setBalance] = useState("");
   const navigate = useNavigate();
 
+  const handleBack = () => {
+    navigate("/login");
+  };
+
+
   const handleSignup = () => {
     postRequest('/accounts', {username, password, balance})
     .then((res) => {
@@ -61,10 +66,16 @@ function SignupPage() {
 
         <button
           disabled={!username || !password || !balance}
-          class="btn btn-primary"
+          class="btn btn-primary mt-2"
           onClick={handleSignup}
         >
           Create Account
+        </button>
+        <button
+          class="btn btn-light mt-2"
+          onClick={handleBack}
+        >
+          Back to Login
         </button>
       </div>
     </div>

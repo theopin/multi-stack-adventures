@@ -35,10 +35,11 @@ function ForexTable() {
   
   return (
     <div>
-      <h3>Forex Converter</h3>
+      <h3>Asian Forex Converter</h3>
       <ToastContainer/>
-      <div>Currency Selected: SGD</div>
-      <table class="table overflow-hidden" >
+      <div>SGD to other Currencies</div>
+      <div style={{'max-height': '600px', display: 'block', overflow: 'auto'}}>
+      <table class="table"  >
         <thead>
           <tr>
             <th scope="col">Currency</th>
@@ -49,12 +50,9 @@ function ForexTable() {
           <DisplayData />
         </tbody>
       </table>
-      <div class="row">
-        {/* TODO: Fetch data  */}
-        <p>Last Updated at: 6 October 2022 11:59pm</p>
-        {/* TODO: Fetch data  */}
-        <button class="btn btn-primary">Refresh Data</button>
       </div>
+
+
     </div>
   );
 }
