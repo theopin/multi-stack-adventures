@@ -143,7 +143,7 @@ public class TopkCommonWords {
         
             //sort reverse later
 
-            int count = 0;
+            int countIters = 0;
             for (Map.Entry<Integer, List<Text>> countWordPair : countWordTracker.entrySet()) {
                 int countLevel = countWordPair.getKey();
                 List<Text> words = countWordPair.getValue();
@@ -154,10 +154,10 @@ public class TopkCommonWords {
 
                     IntWritable count = new IntWritable(countLevel);
                     context.write(word, count);
-                    count++;
+                    countIters++;
                     kIterations--;
                     if (kIterations < 1) {
-                        System.out.println(count);
+                        System.out.println(countIters);
                         return;
                     }
                 }
