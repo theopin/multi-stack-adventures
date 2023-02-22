@@ -58,9 +58,7 @@ public class TopkCommonWords {
 
         while(fileScanner.hasNextLine()){
             String stopword = fileScanner.nextLine();
-            if(stopwords.contains(stopword)) {
-                stopwords.add(stopword);
-            }
+            stopwords.add(stopword);
         }
     }
 
@@ -106,6 +104,8 @@ public class TopkCommonWords {
 
     public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
 
+        private HashMap<Integer, List<Text>> countWordTracker = new HashMap<Integer, List<Text>>();
+
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
                 throws IOException, InterruptedException {
 
@@ -123,15 +123,42 @@ public class TopkCommonWords {
                 return;
             }
 
-            
-            IntWritable count = new IntWritable(minCount);
+            if (countWordTracker.containsKey(minCount)) {
+                List<Text> wordswithSameCount = countWordTracker.get(minCount);
+                wordswithSameCount.add(key);
+            } else {
+                List<Text> wordswithSameCount = new ArrayList<Text>();
+                wordswithSameCount.add(key);
+                countWordTracker.put(minCount, wordswithSameCount);
+            }
 
-            context.write(key, count);
+            
         }
 
         public void cleanup(Context context)
                 throws IOException, InterruptedException {
+        
+            //sort
 
+            for (Map.Entry<Integer, List<Text>> wordCountPair : wordswithSameCount.entrySet()) {
+                int countLevel = wordCountPair.getKey();
+                List<Text> words = wordCountPair.getValue();
+                
+                Collections.sort(words);
+
+                for(Text word : words) {
+
+                    IntWritable count = new IntWritable(countLevel);
+                    context.write(word, count);
+
+                    kIterations--;
+                    if (kIterations < 1) {
+                        return;
+                    }
+                }
+                    
+
+            }
         }
     }
 }
