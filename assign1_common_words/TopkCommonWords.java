@@ -119,7 +119,8 @@ public class TopkCommonWords {
 		        fileCount++;
             }
 
-            System.out.println(key.toString() + minCount.toString());
+            System.out.println(key.toString());
+            System.out.println(minCount);
             System.out.println(fileCount);
             if (fileCount != 2) {
                 return;
@@ -140,11 +141,12 @@ public class TopkCommonWords {
         public void cleanup(Context context)
                 throws IOException, InterruptedException {
         
-            //sort
+            //sort reverse later
+
             int count = 0;
-            for (Map.Entry<Integer, List<Text>> wordCountPair : wordswithSameCount.entrySet()) {
-                int countLevel = wordCountPair.getKey();
-                List<Text> words = wordCountPair.getValue();
+            for (Map.Entry<Integer, List<Text>> countWordPair : countWordTracker.entrySet()) {
+                int countLevel = countWordPair.getKey();
+                List<Text> words = countWordPair.getValue();
                 
                 Collections.sort(words);
 
