@@ -124,7 +124,7 @@ public class TopkCommonWords {
 		        fileCount++;
             }
 
-            if (key.toString() == "three") {
+            if (fileCount == 2) {
             System.out.println(key.toString());
             System.out.println(minCount);
             System.out.println(fileCount);
