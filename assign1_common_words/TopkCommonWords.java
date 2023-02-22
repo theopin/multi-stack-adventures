@@ -71,7 +71,7 @@ public class TopkCommonWords {
 
         public void map(Object key, Text value, Context context) 
                 throws IOException, InterruptedException {
-                    
+
             StringTokenizer itr = new StringTokenizer(value.toString());
 
             while (itr.hasMoreTokens()) {
@@ -103,5 +103,33 @@ public class TopkCommonWords {
                 
             }
         }
-  }
+    }
+
+    public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+        
+        private IntWritable result = new IntWritable();
+
+        public void reduce(Text key, Iterable<IntWritable> values, Context context) 
+                throws IOException, InterruptedException {
+            
+            int minCount = Integer.MAX_VALUE;
+            
+            // Word does not appear in both files - reject
+            if (values.length < 2) {
+                return;
+            }
+
+            for (IntWritable val : values) {
+                if (minCount > val) {
+                    minCount = val.get();
+                }
+            }
+            context.write(key, minCount);
+        }
+
+        public void cleanup(Context context) 
+                throws IOException, InterruptedException {
+            
+        }
+    }
 }
