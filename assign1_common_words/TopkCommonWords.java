@@ -88,18 +88,21 @@ public class TopkCommonWords {
                 } else {
                     wordCountTracker.put(currToken, 1);
                 }
+            }
+        }
 
-                // Iterate through all entries in hashmap, emitting <word, count> per pair
-                for (Map.Entry<String, Integer> wordCountPair : wordCountTracker.entrySet()) {
-                    String wordKey = wordCountPair.getKey();
-                    int wordCount = wordCountPair.getValue();
+        public void cleanup(Context context)
+                throws IOException, InterruptedException {
 
-                    Text word = new Text(wordKey);
-                    IntWritable count = new IntWritable(wordCount);
+            // Iterate through all entries in hashmap, emitting <word, count> per pair
+            for (Map.Entry<String, Integer> wordCountPair : wordCountTracker.entrySet()) {
+                String wordKey = wordCountPair.getKey();
+                int wordCount = wordCountPair.getValue();
 
-                    context.write(word, count);
-                }
+                Text word = new Text(wordKey);
+                IntWritable count = new IntWritable(wordCount);
 
+                context.write(word, count);
             }
         }
     }
