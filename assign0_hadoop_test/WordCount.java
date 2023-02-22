@@ -1,5 +1,5 @@
-// Matric Number: 
-// Name: 
+// Matric Number: A0199277H
+// Name: Theodore Pinto
 // WordCount.java
 import java.io.IOException;
 import java.util.StringTokenizer;
