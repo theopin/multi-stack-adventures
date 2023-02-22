@@ -78,7 +78,7 @@ public class TopkCommonWords {
                 String currToken = itr.nextToken();
 
                 // Do not consider words with length less than/equal to 4 or in stopwords list
-                if (currToken.length <= 4 || stopwords.contains(currToken)) {
+                if (currToken.length() <= 4 || stopwords.contains(currToken)) {
                     continue;
                 }
 
@@ -91,11 +91,11 @@ public class TopkCommonWords {
 
                 // Iterate through all entries in hashmap, emitting <word, count> per pair
                 for (Map.Entry<String, Integer> wordCountPair : wordCountTracker.entrySet()) {
-                    String key = wordCountPair.getKey();
-                    int value = wordCountPair.getValue();
+                    String wordKey = wordCountPair.getKey();
+                    int wordCount = wordCountPair.getValue();
 
-                    Text word = new Text(key);
-                    IntWritable count = new IntWritable(value);
+                    Text word = new Text(wordKey);
+                    IntWritable count = new IntWritable(wordCount);
 
                     context.write(word, count);
                 }
@@ -112,7 +112,7 @@ public class TopkCommonWords {
             int minCount = Integer.MAX_VALUE;
 
             // Word does not appear in both files - reject
-            if (values.length < 2) {
+            if (values.length() < 2) {
                 return;
             }
 
