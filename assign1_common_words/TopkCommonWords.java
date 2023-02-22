@@ -110,22 +110,23 @@ public class TopkCommonWords {
                 throws IOException, InterruptedException {
 
             int minCount = Integer.MAX_VALUE;
-	    int fileCount = 0;
+	        int fileCount = 0;
             
             for (IntWritable val : values) {
                 if (minCount > val.get()) {
                     minCount = val.get();
                 }
-		fileCount++;
+		        fileCount++;
             }
 
-	    if (fileCount != 2) {
-		return;
-	    }
-            Text word = new Text(key);
+            if (fileCount != 2) {
+                return;
+            }
+
+            
             IntWritable count = new IntWritable(minCount);
 
-            context.write(word, count);
+            context.write(key, count);
         }
 
         public void cleanup(Context context)
