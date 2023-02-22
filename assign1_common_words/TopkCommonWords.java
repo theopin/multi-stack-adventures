@@ -86,7 +86,7 @@ public class TopkCommonWords {
                 if (wordCountTracker.containsKey(currToken)) {
                     wordCountTracker.put(currToken, wordCountTracker.get(currToken) + 1);
                 } else {
-                    wordcountTracker.put(currToken, 1);
+                    wordCountTracker.put(currToken, 1);
                 }
 
                 // Iterate through all entries in hashmap, emitting <word, count> per pair
@@ -110,18 +110,18 @@ public class TopkCommonWords {
                 throws IOException, InterruptedException {
 
             int minCount = Integer.MAX_VALUE;
-
-            // Word does not appear in both files - reject
-            if (values.length() < 2) {
-                return;
-            }
-
+	    int fileCount = 0;
+            
             for (IntWritable val : values) {
-                if (minCount > val) {
+                if (minCount > val.get()) {
                     minCount = val.get();
                 }
+		fileCount++;
             }
 
+	    if (fileCount != 2) {
+		return;
+	    }
             Text word = new Text(key);
             IntWritable count = new IntWritable(minCount);
 
