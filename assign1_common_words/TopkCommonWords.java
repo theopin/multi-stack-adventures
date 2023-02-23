@@ -125,9 +125,9 @@ public class TopkCommonWords {
             }
 
             if (fileCount == 2) {
-                // System.out.println(key.toString());
+                System.out.println(key.toString());
                 // System.out.println(minCount);
-                // System.out.println(fileCount);
+                System.out.println(fileCount);
 
                 if (countWordTracker.containsKey(minCount)) {
                     List<Text> wordswithSameCount = countWordTracker.get(minCount);
@@ -138,6 +138,8 @@ public class TopkCommonWords {
                     wordswithSameCount.add(key);
                     countWordTracker.put(minCount, wordswithSameCount);
                 }
+		System.out.println("Inserted! New Result");
+		System.out.println(countWordTracker);
             }
 
 
@@ -151,7 +153,8 @@ public class TopkCommonWords {
             //sort reverse later
 
             int countIters = 0;
-            
+	    System.out.println(101333);
+            System.out.println(countWordTracker);
             Map<Integer, List<Text>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {
@@ -159,10 +162,9 @@ public class TopkCommonWords {
                 }
             });
             reverseSortedTracker.putAll(countWordTracker);
-
-
             for (Map.Entry<Integer, List<Text>> countWordPair : reverseSortedTracker.entrySet()) {
-                int countLevel = countWordPair.getKey();
+System.out.println(countWordPair.getKey());
+    		    int countLevel = countWordPair.getKey();
                 List<Text> words = countWordPair.getValue();
                 
                 Collections.sort(words);
