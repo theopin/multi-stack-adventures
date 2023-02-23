@@ -111,7 +111,7 @@ public class TopkCommonWords {
 
     public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
 
-        private HashMap<Integer, List<Text>> countWordTracker = new HashMap<Integer, List<Text>>();
+        private HashMap<Integer, List<String> > countWordTracker = new HashMap<Integer, List<String> >();
         
 
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
@@ -133,16 +133,15 @@ public class TopkCommonWords {
                 System.out.println(fileCount);
 
                 if (countWordTracker.containsKey(minCount)) {
-                    List<Text> wordswithSameCount = countWordTracker.get(minCount);
-                    wordswithSameCount.add(key);
-                    countWordTracker.put(minCount, wordswithSameCount);
+                    List<String> wordswithSameCount = countWordTracker.get(minCount);
+                    wordswithSameCount.add(key.toString());
                 } else {
-                    List<Text> wordswithSameCount = new ArrayList<Text>();
-                    wordswithSameCount.add(key);
+                    List<String>  wordswithSameCount = new ArrayList<String>();
+                    wordswithSameCount.add(key.toString());
                     countWordTracker.put(minCount, wordswithSameCount);
                 }
-		System.out.println("Inserted! New Result");
-		System.out.println(countWordTracker);
+                System.out.println("Inserted! New Result");
+                System.out.println(countWordTracker);
             }
 
 
@@ -156,30 +155,28 @@ public class TopkCommonWords {
             //sort reverse later
 
             int countIters = 0;
-	    System.out.println(101333);
-            System.out.println(countWordTracker);
-            Map<Integer, List<Text>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
+            Map<Integer, List<String>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {
                     return b.compareTo(a);
                 }
             });
             reverseSortedTracker.putAll(countWordTracker);
-            for (Map.Entry<Integer, List<Text>> countWordPair : reverseSortedTracker.entrySet()) {
-System.out.println(countWordPair.getKey());
+            for (Map.Entry<Integer, List<String>> countWordPair : reverseSortedTracker.entrySet()) {
     		    int countLevel = countWordPair.getKey();
-                List<Text> words = countWordPair.getValue();
+                List<String> words = countWordPair.getValue();
                 
                 Collections.sort(words);
 
-                for(Text word : words) {
+                for(String word : words) {
 
                     IntWritable count = new IntWritable(countLevel);
-                    context.write(word, count);
+                    Text wordOutput = new Text(word);
+
+                    context.write(count, wordOutput);
                     countIters++;
                     kIterations--;
                     if (kIterations < 1) {
-                        System.out.println(countIters);
                         return;
                     }
                 }
