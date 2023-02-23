@@ -125,22 +125,22 @@ public class TopkCommonWords {
             }
 
             if (fileCount == 2) {
-            System.out.println(key.toString());
-            System.out.println(minCount);
-            System.out.println(fileCount);
-            }
-            if (fileCount != 2) {
-                return;
+                System.out.println(key.toString());
+                System.out.println(minCount);
+                System.out.println(fileCount);
+
+                if (countWordTracker.containsKey(minCount)) {
+                    List<Text> wordswithSameCount = countWordTracker.get(minCount);
+                    wordswithSameCount.add(key);
+                    countWordTracker.put(minCount, wordswithSameCount);
+                } else {
+                    List<Text> wordswithSameCount = new ArrayList<Text>();
+                    wordswithSameCount.add(key);
+                    countWordTracker.put(minCount, wordswithSameCount);
+                }
             }
 
-            if (countWordTracker.containsKey(minCount)) {
-                List<Text> wordswithSameCount = countWordTracker.get(minCount);
-                wordswithSameCount.add(key);
-            } else {
-                List<Text> wordswithSameCount = new ArrayList<Text>();
-                wordswithSameCount.add(key);
-                countWordTracker.put(minCount, wordswithSameCount);
-            }
+
 
             
         }
