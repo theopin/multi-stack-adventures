@@ -175,11 +175,9 @@ public class TopkCommonWords {
                     return;
                     if (kIterations < 1) {
                         return;
+                    }
                 }
             }
-                    
-
-            // }
         }
     }
 }
