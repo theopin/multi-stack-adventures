@@ -148,7 +148,6 @@ public class TopkCommonWords {
                 throws IOException, InterruptedException {
         
             //sort reverse 
-            int countIters = 0;
             
             Map<Integer, List<String>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
                 @Override
@@ -164,19 +163,19 @@ public class TopkCommonWords {
                 List<String> words = countWordPair.getValue();
                 
                 Collections.sort(words);
-                System.out.println("Alls good");
+                
 
-            //     for(String word : words) {
+                for(String word : words) {
 
-            //         IntWritable count = new IntWritable(countLevel);
-            //         Text wordOutput = new Text(word);
+                    IntWritable count = new IntWritable(countLevel);
+                    Text wordOutput = new Text(word);
+                    System.out.println("Alls good");
 
             //         context.write(count, wordOutput);
-            //         countIters++;
             //         kIterations--;
             //         if (kIterations < 1) {
             //             return;
-            //         }
+                }
             }
                     
 
