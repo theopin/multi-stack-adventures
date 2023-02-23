@@ -34,8 +34,8 @@ public class TopkCommonWords {
         job.setJarByClass(TopkCommonWords.class);
 
         job.setMapperClass(TokenizerMapper.class);
-        job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(IntWritable.class);
+        // job.setMapOutputKeyClass(Text.class);
+        // job.setMapOutputValueClass(IntWritable.class);
         
         job.setReducerClass(IntSumReducer.class);
 
