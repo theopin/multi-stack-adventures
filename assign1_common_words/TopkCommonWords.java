@@ -31,12 +31,16 @@ public class TopkCommonWords {
     public static void main(String[] args) throws Exception{
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "TopkCommonWords");
+
+        FileSystem fs = FileSystem.get(conf);
+        Path interDirPath = new Path("/home/course/cs4225/cs4225_assign/temp/assign1_inter/A0199277H"); // REPLACE THIS WITH YOUR OWN ID!
+
         job.setJarByClass(TopkCommonWords.class);
 
         job.setMapperClass(TokenizerMapper.class);
         job.setReducerClass(IntSumReducer.class);
 
-job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
 
         job.setOutputKeyClass(IntWritable.class);
@@ -50,6 +54,9 @@ job.setMapOutputKeyClass(Text.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileInputFormat.addInputPath(job, new Path(args[1]));
         FileOutputFormat.setOutputPath(job, new Path(args[3]));
+
+        fs.delete(interDirPath, true); // ONLY call this after your last job has completed to delete your intermediate directory
+
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 
@@ -122,6 +129,7 @@ job.setMapOutputKeyClass(Text.class);
             int minCount = Integer.MAX_VALUE;
 	        int fileCount = 0;
             
+            // Compare received values per file, take smallest one
             for (IntWritable val : values) {
                 if (minCount > val.get()) {
                     minCount = val.get();
@@ -129,12 +137,14 @@ job.setMapOutputKeyClass(Text.class);
 		        fileCount++;
             }
 
+            // Word appears in both files
             if (fileCount == 2) {
 
+                // Words with same count exist, append word to existing list of words
                 if (countWordTracker.containsKey(minCount)) {
                     List<String> wordswithSameCount = countWordTracker.get(minCount);
                     wordswithSameCount.add(key.toString());
-                } else {
+                } else { /// Words with same count do not exist, creat new list of words
                     List<String>  wordswithSameCount = new ArrayList<String>();
                     wordswithSameCount.add(key.toString());
                     countWordTracker.put(minCount, wordswithSameCount);
@@ -145,8 +155,8 @@ job.setMapOutputKeyClass(Text.class);
         public void cleanup(Context context)
                 throws IOException, InterruptedException {
         
-            //sort reverse 
             
+            //Run sort on the entire list of words to get reverse order as requested
             Map<Integer, List<String>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {
@@ -155,18 +165,21 @@ job.setMapOutputKeyClass(Text.class);
             });
             reverseSortedTracker.putAll(countWordTracker);
             
+            // Iterate through list starting from highest count
             for (Map.Entry<Integer, List<String>> countWordPair : reverseSortedTracker.entrySet()) {
     		    int countLevel = countWordPair.getKey();
                 List<String> words = countWordPair.getValue();
                 
+                // Sort the list of words with same count by lexographical order
                 Collections.sort(words);
 
                 for(String word : words) {
-
+                    
                     IntWritable count = new IntWritable(countLevel);
                     Text wordOutput = new Text(word);
                     
                     kIterations--;
+                    // Write out output, stop if k has been reached
                     context.write(count, wordOutput);
                     if (kIterations < 1) {
                         return;
