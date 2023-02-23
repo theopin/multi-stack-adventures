@@ -36,8 +36,8 @@ public class TopkCommonWords {
         job.setMapperClass(TokenizerMapper.class);
         job.setReducerClass(IntSumReducer.class);
 
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputKeyClass(IntWritable.class);
+        job.setOutputValueClass(Text.class);
 
         // Read in all stopwords from stopword file (args[2]) and k times to run (args[4])
         scanStopwords(args[2]);

@@ -8,4 +8,3 @@
 6	    woman
 5	    place
 5	    three
-
