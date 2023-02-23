@@ -88,6 +88,12 @@ public class TopkCommonWords {
             }
 
             
+
+        }
+
+        public void cleanup(Context context)
+                throws IOException, InterruptedException {
+
             // Iterate through all entries in hashmap, emitting <word, count> per pair
             for (Map.Entry<String, Integer> wordCountPair : wordCountTracker.entrySet()) {
                 String wordKey = wordCountPair.getKey();
@@ -98,10 +104,6 @@ public class TopkCommonWords {
 
                 context.write(word, count);
             }
-        }
-
-        public void cleanup(Context context)
-                throws IOException, InterruptedException {
 
         }
     }
