@@ -164,7 +164,7 @@ public class TopkCommonWords {
                     Text wordOutput = new Text(word);
                     
                     kIterations--;
-                    context.write(wordOutput, count);
+                    context.write(count, wordOutput);
                     if (kIterations < 1) {
                         return;
                     }
