@@ -128,15 +128,13 @@ public class TopkCommonWords {
                 System.out.println(minCount);
 
                 System.out.println(countWordTracker);
-                if (countWordTracker.containsKey(minCount)) {
-                    List<String> wordswithSameCount = new ArrayList<String>(countWordTracker.get(minCount));
-                    wordswithSameCount.add(key.toString());
-                    countWordTracker.put(minCount, wordswithSameCount);
-                } else {
-                    List<String>  wordswithSameCount = new ArrayList<String>();
-                    wordswithSameCount.add(key.toString());
-                    countWordTracker.put(minCount, wordswithSameCount);
-                }
+               
+                if (!countWordTracker.containsKey(minCount)) {
+                    countWordTracker.put(minCount, new ArrayList<String>);
+                } 
+                
+                myMaps.get(minCount).add(key.toString());
+               
                 System.out.println("Inserted! New Result");
                 System.out.println(countWordTracker);
             }
@@ -169,7 +167,7 @@ public class TopkCommonWords {
 
                     IntWritable count = new IntWritable(countLevel);
                     Text wordOutput = new Text(word);
-
+ 
                     context.write(count, wordOutput);
                     countIters++;
                     kIterations--;
