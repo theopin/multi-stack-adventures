@@ -109,6 +109,7 @@ public class TopkCommonWords {
     public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
 
         private HashMap<Integer, List<Text>> countWordTracker = new HashMap<Integer, List<Text>>();
+        
 
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
                 throws IOException, InterruptedException {
@@ -150,7 +151,17 @@ public class TopkCommonWords {
             //sort reverse later
 
             int countIters = 0;
-            for (Map.Entry<Integer, List<Text>> countWordPair : countWordTracker.entrySet()) {
+            
+            Map<K, V> reverseSortedTracker = new TreeMap<>(new Comparator<K>() {
+                @Override
+                public int compare(K a, K b) {
+                    return b.compareTo(a);
+                }
+            });
+            treeMap.putAll(countWordTracker);
+
+
+            for (Map.Entry<Integer, List<Text>> countWordPair : reverseSortedTracker.entrySet()) {
                 int countLevel = countWordPair.getKey();
                 List<Text> words = countWordPair.getValue();
                 
