@@ -68,7 +68,6 @@ public class TopkCommonWords {
         public void map(Object key, Text value, Context context)
                 throws IOException, InterruptedException {
             
-            System.out.println(value.toString());
             StringTokenizer itr = new StringTokenizer(value.toString());
 
             while (itr.hasMoreTokens()) {
@@ -138,10 +137,6 @@ public class TopkCommonWords {
                     countWordTracker.put(minCount, wordswithSameCount);
                 }
             }
-
-
-
-            
         }
 
         public void cleanup(Context context)
@@ -156,14 +151,12 @@ public class TopkCommonWords {
                 }
             });
             reverseSortedTracker.putAll(countWordTracker);
-            System.out.println(countWordTracker);
             
             for (Map.Entry<Integer, List<String>> countWordPair : reverseSortedTracker.entrySet()) {
     		    int countLevel = countWordPair.getKey();
                 List<String> words = countWordPair.getValue();
                 
                 Collections.sort(words);
-                
 
                 for(String word : words) {
 
