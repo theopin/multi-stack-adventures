@@ -87,6 +87,9 @@ public class TopkCommonWords {
                     wordCountTracker.put(currToken, 1);
                 }
             }
+
+            
+
         }
 
         public void cleanup(Context context)
@@ -102,6 +105,7 @@ public class TopkCommonWords {
 
                 context.write(word, count);
             }
+
         }
     }
 
@@ -125,20 +129,19 @@ public class TopkCommonWords {
 
             if (fileCount == 2) {
                 System.out.println(key.toString());
-                System.out.println(minCount);
+                // System.out.println(minCount);
 
-                System.out.println(countWordTracker);
+
                 if (countWordTracker.containsKey(minCount)) {
-                    List<String> wordswithSameCount = (countWordTracker.get(minCount));
+                    List<String> wordswithSameCount = countWordTracker.get(minCount);
                     wordswithSameCount.add(key.toString());
-                    countWordTracker.put(minCount, wordswithSameCount);
                 } else {
                     List<String>  wordswithSameCount = new ArrayList<String>();
                     wordswithSameCount.add(key.toString());
                     countWordTracker.put(minCount, wordswithSameCount);
                 }
                 System.out.println("Inserted! New Result");
-                System.out.println(countWordTracker);
+                //System.out.println(countWordTracker);
             }
 
 
@@ -169,7 +172,7 @@ public class TopkCommonWords {
 
                     IntWritable count = new IntWritable(countLevel);
                     Text wordOutput = new Text(word);
- 
+
                     context.write(count, wordOutput);
                     countIters++;
                     kIterations--;
