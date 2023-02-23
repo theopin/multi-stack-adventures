@@ -9,7 +9,7 @@ import java.util.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
+import java.nio.file.FileSystem;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
