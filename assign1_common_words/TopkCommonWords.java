@@ -170,13 +170,11 @@ public class TopkCommonWords {
                     IntWritable count = new IntWritable(countLevel);
                     Text wordOutput = new Text(word);
                     
-
-                    context.write(count, wordOutput);
                     kIterations--;
-                    System.out.println("Alls good");
+                    context.write(wordOutput, count);
                     return;
-            //         if (kIterations < 1) {
-            //             return;
+                    if (kIterations < 1) {
+                        return;
                 }
             }
                     
