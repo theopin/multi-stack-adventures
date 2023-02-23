@@ -152,9 +152,9 @@ public class TopkCommonWords {
 
             int countIters = 0;
             
-            Map<K, V> reverseSortedTracker = new TreeMap<>(new Comparator<K>() {
+            Map<Integer, List<Text>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
                 @Override
-                public int compare(K a, K b) {
+                public int compare(Integer a, Integer b) {
                     return b.compareTo(a);
                 }
             });
