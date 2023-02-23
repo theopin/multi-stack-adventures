@@ -130,7 +130,7 @@ public class TopkCommonWords {
                 System.out.println(countWordTracker);
                
                 if (!countWordTracker.containsKey(minCount)) {
-                    countWordTracker.put(minCount, new ArrayList<String>);
+                    countWordTracker.put(minCount, new ArrayList<String>());
                 } 
                 
                 myMaps.get(minCount).add(key.toString());
