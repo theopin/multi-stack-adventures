@@ -149,7 +149,7 @@ public class TopkCommonWords {
         
             //sort reverse 
             int countIters = 0;
-            System.out.println(countWordTracker);
+            
             Map<Integer, List<String>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {
@@ -158,11 +158,13 @@ public class TopkCommonWords {
             });
             reverseSortedTracker.putAll(countWordTracker);
             System.out.println(countWordTracker);
-            // for (Map.Entry<Integer, List<String>> countWordPair : reverseSortedTracker.entrySet()) {
-    		//     int countLevel = countWordPair.getKey();
-            //     List<String> words = countWordPair.getValue();
+            
+            for (Map.Entry<Integer, List<String>> countWordPair : reverseSortedTracker.entrySet()) {
+    		    int countLevel = countWordPair.getKey();
+                List<String> words = countWordPair.getValue();
                 
-            //     Collections.sort(words);
+                Collections.sort(words);
+                System.out.println("Alls good");
 
             //     for(String word : words) {
 
@@ -175,7 +177,7 @@ public class TopkCommonWords {
             //         if (kIterations < 1) {
             //             return;
             //         }
-            //     }
+            }
                     
 
             // }
