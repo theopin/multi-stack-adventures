@@ -130,7 +130,7 @@ public class TopkCommonWords {
             if (fileCount == 2) {
                 System.out.println(key.toString());
                 // System.out.println(minCount);
-
+                System.out.println(fileCount);
 
                 if (countWordTracker.containsKey(minCount)) {
                     List<String> wordswithSameCount = countWordTracker.get(minCount);
@@ -141,7 +141,7 @@ public class TopkCommonWords {
                     countWordTracker.put(minCount, wordswithSameCount);
                 }
                 System.out.println("Inserted! New Result");
-                //System.out.println(countWordTracker);
+                System.out.println(countWordTracker);
             }
 
 
@@ -152,37 +152,36 @@ public class TopkCommonWords {
         public void cleanup(Context context)
                 throws IOException, InterruptedException {
         
-            //sort reverse later
-
-            int countIters = 0;
-            Map<Integer, List<String>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
-                @Override
-                public int compare(Integer a, Integer b) {
-                    return b.compareTo(a);
-                }
-            });
-            reverseSortedTracker.putAll(countWordTracker);
-            for (Map.Entry<Integer, List<String>> countWordPair : reverseSortedTracker.entrySet()) {
-    		    int countLevel = countWordPair.getKey();
-                List<String> words = countWordPair.getValue();
+            //sort reverse 
+            // int countIters = 0;
+            // Map<Integer, List<String>> reverseSortedTracker = new TreeMap<>(new Comparator<Integer>() {
+            //     @Override
+            //     public int compare(Integer a, Integer b) {
+            //         return b.compareTo(a);
+            //     }
+            // });
+            // reverseSortedTracker.putAll(countWordTracker);
+            // for (Map.Entry<Integer, List<String>> countWordPair : reverseSortedTracker.entrySet()) {
+    		//     int countLevel = countWordPair.getKey();
+            //     List<String> words = countWordPair.getValue();
                 
-                Collections.sort(words);
+            //     Collections.sort(words);
 
-                for(String word : words) {
+            //     for(String word : words) {
 
-                    IntWritable count = new IntWritable(countLevel);
-                    Text wordOutput = new Text(word);
+            //         IntWritable count = new IntWritable(countLevel);
+            //         Text wordOutput = new Text(word);
 
-                    context.write(count, wordOutput);
-                    countIters++;
-                    kIterations--;
-                    if (kIterations < 1) {
-                        return;
-                    }
-                }
+            //         context.write(count, wordOutput);
+            //         countIters++;
+            //         kIterations--;
+            //         if (kIterations < 1) {
+            //             return;
+            //         }
+            //     }
                     
 
-            }
+            // }
         }
     }
 }
