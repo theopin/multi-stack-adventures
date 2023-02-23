@@ -108,7 +108,7 @@ public class TopkCommonWords {
         }
     }
 
-    public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+    public static class IntSumReducer extends Reducer<Text,IntWritable,IntWritable,Text> {
 
         private HashMap<Integer, List<String> > countWordTracker = new HashMap<Integer, List<String> >();
         
