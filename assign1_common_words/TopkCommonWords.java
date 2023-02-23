@@ -127,6 +127,7 @@ public class TopkCommonWords {
                 System.out.println(key.toString());
                 System.out.println(minCount);
 
+                System.out.println(countWordTracker);
                 if (countWordTracker.containsKey(minCount)) {
                     List<String> wordswithSameCount = new ArrayList<String>(countWordTracker.get(minCount));
                     wordswithSameCount.add(key.toString());
