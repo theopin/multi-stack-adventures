@@ -1,0 +1,64 @@
+name: Build and Deploy to AWS EB and Lambda
+
+on:
+ push:
+   branches: 
+     - master
+
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:      
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Set outputs
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Install packages
+        working-directory: ./forex_serverless
+        run: npm ci
+      
+      - name: Generate deployment package for AWS Lambda
+        run: zip -r ../forex_serverless.zip .
+        working-directory: ./forex_serverless
+
+      - name: Deploy to Lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ap-southeast-1
+          function_name: getAsianForexData
+          zip_file: forex_serverless.zip
+
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+            envkey_MONGODB_URI: ${{ secrets.MONGODB_PROD_URI }}
+            envkey_USER_REDIS_PORT: ${{ secrets.USER_REDIS_PORT }}
+            envkey_JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
+            envkey_JWT_TOKEN_EXPIRY: ${{ secrets.JWT_TOKEN_EXPIRY }}
+            envkey_HASH_SALT_ROUNDS: ${{ secrets.HASH_SALT_ROUNDS }}
+            directory: ./backend
+            file_name: .env
+            fail_on_empty: true
+
+      - name: Generate deployment package for AWS EB
+        working-directory: ./backend
+        run: zip -r9 ../deploy.zip . -x'*.git*'
+
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: task-b-env
+          environment_name: Taskbenv-env
+          version_label: ${{ steps.vars.outputs.sha_short }}
+          region: ap-southeast-1
+          deployment_package: deploy.zip
+

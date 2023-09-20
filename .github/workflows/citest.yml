@@ -1,0 +1,46 @@
+name: Node.js CI Test
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        mongodb-version: ['5.0']
+        redis-version: [4]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+            mongodb-version: ${{ matrix.mongodb-version }}
+            mongodb-port: 27017
+
+      # - name: Start Redis v${{ matrix.redis-version }}
+      #   uses: superchargejs/redis-github-action@1.1.0
+      #   with:
+      #     redis-version: ${{ matrix.redis-version }}
+
+      - run: npm ci
+        working-directory: ./backend
+        
+      - run: npm test
+        working-directory: ./backend
+        env:
+            MONGODB_URI: ${{ secrets.MONGODB_URI }}
+            USER_REDIS_PORT: ${{ secrets.USER_REDIS_PORT }}
+            JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
+            JWT_TOKEN_EXPIRY: ${{ secrets.JWT_TOKEN_EXPIRY }}
+            HASH_SALT_ROUNDS: ${{ secrets.HASH_SALT_ROUNDS }}
