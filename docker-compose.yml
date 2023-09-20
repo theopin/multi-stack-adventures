@@ -1,0 +1,10 @@
+services:
+    web_server:
+        build: 
+            context: ./app
+    nginx:
+        restart: always
+        build: 
+            context: ./nginx
+        ports:
+            - 90:80
