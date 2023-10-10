@@ -29,10 +29,7 @@ Welcome to the Multi-Stack Adventures repository! Here, I've documented my journ
 
 ## Repository Contents
 
-- [.gitignore](.gitignore): Specifies ignored files and directories.
-- [README.md](README.md): You are here! This README provides an overview of the repository's contents.
-- [Other Files]: Explore additional files and configurations associated with each technology stack in their respective directories.
 
 Feel free to explore the specific directories and files to gain a deeper understanding of each technology stack and the objectives achieved. The summaries above offer a high-level overview, while the individual sections provide more detailed information about the actions taken for each stack.
 
-If you have any questions or need further information about a particular topic, please don't hesitate to reach out. Enjoy your exploration!
+Enjoy your exploration!
